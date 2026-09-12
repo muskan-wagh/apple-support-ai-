@@ -199,6 +199,11 @@
 ## Current status / next action
 
 - ✅ **Phases 2–18 substantially complete 2026-09-12 (single "start" session).**
+- ✅ **Web demo layer added (separate request): Next.js + Tailwind UI over the existing
+  agent via `POST /api/support` → `runSupportAgent()`. No changes to
+  data/reports/evaluation/baselines/src-{intents,retrieval,escalation,generation}.
+  `npm run build` OK, `npm test` 52/52, `npm run web:build` OK, API verified
+  (empty/long/bad-JSON/normal/escalation/real-case-ids). Run with `npm run web`.
 - Embedding index: building in background (~26% at report time); lexical path measured.
 - Full-LLM eval: quota-blocked (OpenRouter free 50/day); `npm run evaluate` resumes via
   `tmp/eval-cache.json` after reset. Deterministic eval: `npm run evaluate:offline`.

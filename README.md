@@ -65,6 +65,22 @@ npm run agent -- "My iPhone won't connect to WiFi"
 npm run dev
 ```
 
+## Web Demo
+
+A Next.js web layer over the existing Apple Support AI agent (the UI is not the
+AI system — all analysis comes from `src/agent/runSupportAgent.ts` via
+`POST /api/support`).
+
+```bash
+npm run web     # dev server, then open http://localhost:3000
+npm run web:build && npm run web:start   # production build + serve
+```
+
+Type a customer issue, get intent + confidence, escalation advice, the top 3
+real historical cases, and a generated reply. No key needed to try it (keyword
++ template fallbacks); with `LLM_API_KEY` in `.env` it uses the LLM path.
+The key stays server-side — it is never sent to the browser.
+
 ## Evaluation / tests
 ```bash
 npm test        # vitest, mocked LLM — no key needed

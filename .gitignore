@@ -17,3 +17,6 @@ tmp/
 logs/
 .DS_Store
 .kaggle-venv/
+# Next.js web demo build output.
+.next/
+next-env.d.ts
