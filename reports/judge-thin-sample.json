@@ -1,0 +1,10 @@
+{
+  "provenance": "eval run 1 (2026-09-12) before free-tier daily quota (50/day) exhausted; 14/100 items got LLM verdicts, rest heuristic",
+  "judge": {
+    "n": 100,
+    "llmJudged": 14,
+    "heuristicFallbacks": 86,
+    "meanScore": 4.071428571428571,
+    "passRate": 0.7142857142857143
+  }
+}

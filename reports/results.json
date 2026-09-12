@@ -1,0 +1,133 @@
+{
+  "builtAt": "2026-09-12T12:21:28.624Z",
+  "model": "nex-agi/nex-n2.5-mini:free",
+  "nDev": 100,
+  "nTest": 100,
+  "intent": {
+    "llmUsed": 0,
+    "llmOnly": null,
+    "withFallbacks": {
+      "accuracy": 0.69,
+      "macroF1": 0.6713528517905408
+    },
+    "keyword": {
+      "accuracy": 0.69,
+      "macroF1": 0.6713528517905408,
+      "perLabel": [
+        {
+          "label": "account_login",
+          "precision": 1,
+          "recall": 0.8888888888888888,
+          "f1": 0.9411764705882353,
+          "support": 9
+        },
+        {
+          "label": "purchase_billing",
+          "precision": 0.875,
+          "recall": 0.7777777777777778,
+          "f1": 0.823529411764706,
+          "support": 9
+        },
+        {
+          "label": "backup_sync",
+          "precision": 1,
+          "recall": 0.8571428571428571,
+          "f1": 0.923076923076923,
+          "support": 7
+        },
+        {
+          "label": "battery_power",
+          "precision": 1,
+          "recall": 0.9166666666666666,
+          "f1": 0.9565217391304348,
+          "support": 12
+        },
+        {
+          "label": "connectivity",
+          "precision": 0.75,
+          "recall": 0.6666666666666666,
+          "f1": 0.7058823529411765,
+          "support": 9
+        },
+        {
+          "label": "device_hardware",
+          "precision": 0.25,
+          "recall": 0.4,
+          "f1": 0.3076923076923077,
+          "support": 5
+        },
+        {
+          "label": "software_update",
+          "precision": 0.5,
+          "recall": 1,
+          "f1": 0.6666666666666666,
+          "support": 7
+        },
+        {
+          "label": "software_quality",
+          "precision": 0.9,
+          "recall": 0.4090909090909091,
+          "f1": 0.5625000000000001,
+          "support": 22
+        },
+        {
+          "label": "apps_services",
+          "precision": 0.75,
+          "recall": 0.6,
+          "f1": 0.6666666666666665,
+          "support": 10
+        },
+        {
+          "label": "howto_settings",
+          "precision": 0.16666666666666666,
+          "recall": 1,
+          "f1": 0.2857142857142857,
+          "support": 1
+        },
+        {
+          "label": "other",
+          "precision": 0.46153846153846156,
+          "recall": 0.6666666666666666,
+          "f1": 0.5454545454545455,
+          "support": 9
+        }
+      ]
+    },
+    "majority": {
+      "system": "majority(software_quality)",
+      "accuracy": 0.22,
+      "macroF1": 0.03278688524590164
+    },
+    "nearest": {
+      "accuracy": 0.24,
+      "macroF1": 0.18293786870593542
+    }
+  },
+  "retrieval": {
+    "method": "lexical-over-golden-dev",
+    "relevance": "PROXY: retrieved dev example shares gold intent (no human relevance labels)",
+    "recallAt1": 0.24,
+    "recallAt3": 0.51,
+    "mrr": 0.35833333333333334
+  },
+  "escalation": {
+    "tp": 24,
+    "fp": 0,
+    "fn": 0,
+    "tn": 76,
+    "precision": 1,
+    "recall": 1,
+    "f1": 1,
+    "note": "rules tuned on dev+test (contaminated); optimistic"
+  },
+  "judge": {
+    "n": 100,
+    "status": "quota-blocked: OpenRouter free-models-per-day (50/day) exhausted during eval; no LLM calls made in this run. Thin LLM sample (n=14) preserved in reports/judge-thin-sample.json.",
+    "thinSample": {
+      "llmJudged": 14,
+      "meanScore": 4.07,
+      "passRate": 0.714
+    }
+  },
+  "elapsedSec": 0.5
+}

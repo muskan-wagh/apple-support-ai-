@@ -16,7 +16,8 @@
     "intents:count": "tsx scripts/countIntents.ts",
     "golden:sample": "tsx scripts/buildGolden.ts --sample",
     "golden:finalize": "tsx scripts/finalizeGolden.ts",
-    "evaluate": "tsx evaluation/run.ts"
+    "evaluate": "tsx evaluation/run.ts",
+    "evaluate:offline": "EVAL_OFFLINE=1 tsx evaluation/run.ts"
   },
   "dependencies": {
     "@lancedb/lancedb": "^0.12.0",

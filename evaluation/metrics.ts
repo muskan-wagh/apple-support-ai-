@@ -63,5 +63,5 @@ export function recallAtK(hitRanks: Array<number | null>, k: number): number {
 
 export function mrr(hitRanks: Array<number | null>): number {
   if (hitRanks.length === 0) return 0;
-  return hitRanks.reduce((s, r) => s + (r === null ? 0 : 1 / (r + 1)), 0) / hitRanks.length;
+  return hitRanks.reduce<number>((s, r) => s + (r === null ? 0 : 1 / (r + 1)), 0) / hitRanks.length;
 }
