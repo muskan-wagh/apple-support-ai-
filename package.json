@@ -12,6 +12,8 @@
     "data:filter": "tsx scripts/filterAppleSupport.ts",
     "data:conversations": "tsx scripts/buildConversations.ts",
     "embeddings": "tsx scripts/buildEmbeddings.ts",
+    "retrieval:verify": "tsx scripts/verifyRetrieval.ts",
+    "intents:count": "tsx scripts/countIntents.ts",
     "evaluate": "tsx evaluation/run.ts"
   },
   "dependencies": {

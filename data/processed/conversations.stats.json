@@ -1,0 +1,10 @@
+{
+  "brandAuthorId": "AppleSupport",
+  "inputRows": 219497,
+  "rawPairs": 98576,
+  "dedupedPairs": 98576,
+  "duplicatesRemoved": 0,
+  "outputBytes": 42024896,
+  "outputMB": 40.08,
+  "method": "join inbound.response_tweet_id -> outbound tweet_id where author == brand; drop empty/dedup identical pairs"
+}

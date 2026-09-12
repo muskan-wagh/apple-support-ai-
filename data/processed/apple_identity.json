@@ -1,0 +1,18 @@
+{
+  "brandAuthorId": "AppleSupport",
+  "evidence": {
+    "totalRows": 106860,
+    "outboundRows": 106860,
+    "outboundShare": 1,
+    "brandTweetIdsCollected": 106860,
+    "sampleText": "@115854 We're here for you. Which version of the iOS are you running? Check from Settings &gt; General &gt; About.",
+    "candidatesConsidered": [
+      {
+        "author_id": "AppleSupport",
+        "total": 106860,
+        "outbound": 106860
+      }
+    ],
+    "method": "ranked author_id matching /apple/i by outbound volume from streaming scan of data/raw/twcs.csv"
+  }
+}

@@ -3,8 +3,14 @@ dist/
 coverage/
 .env
 data/raw/
+# Large generated intermediates: reproducible via npm run data:filter / data:conversations.
+# Keep small evidence/stats files (apple_identity.json, conversations.stats.json) tracked.
+data/processed/apple_threads.csv
+data/processed/conversations.jsonl
 *.lancedb/
 .lancedb/
+# Local embedding model cache (Transformers.js download, ~80MB, reproducible).
+models/
 tmp/
 .tmp/
 *.log
