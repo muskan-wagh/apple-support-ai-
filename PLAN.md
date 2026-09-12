@@ -47,13 +47,13 @@
 | 1B | Filter Apple Support data | DONE | `npm run data:filter` → 219,497 rows; 0 unlinked non-brand rows; no other brands |
 | 1C | Reconstruct conversations | DONE | `npm run data:conversations` → 98,576 raw → 98,576 deduped; dedup=0 explained |
 | 1D | Embedding size gate (report only) | DONE — ⏸ STOPPED FOR APPROVAL, model NOT downloaded | `npm run embeddings -- --report-only` → ~307.8 MB est. vs 13.6 GB free: SAFE |
-| 2 | Intent taxonomy (~8–12 intents from real data, `src/intents/taxonomy.ts`) | TODO | — |
-| 3 | Golden dataset (150–250 validated; `data/golden/golden-dev.jsonl`, `golden-test.jsonl`, `reports/labeling-guide.md`; never fabricate agreement) | TODO | — |
-| 4 | Intent classifier (`classifyIntent` → `{intent, confidence}`; OpenRouter+Zod+fallback; key-free tests) | TODO | — |
+| 2 | Intent taxonomy (~8–12 intents from real data, `src/intents/taxonomy.ts`) | DONE | `npm run intents:count` → 98,576 msgs, 0 example multi-match failures; `npm run build` OK; `npm test` 16/16 OK (2026-09-12) |
+| 3 | Golden dataset (150–250 validated; `data/golden/golden-dev.jsonl`, `golden-test.jsonl`, `reports/labeling-guide.md`; never fabricate agreement) | DONE | 200 validated (100 dev/100 test, all read); weak-agree 65.5%; esc 18.0% (2026-09-12) |
+| 4 | Intent classifier (`classifyIntent` → `{intent, confidence}`; OpenRouter+Zod+fallback; key-free tests) | DONE | `src/intents/classify.ts`; `npm test` 42/42 incl. 7 classifier tests (mocked fetch) |
 | 5 | Retrieval/RAG (`retrieveSimilarExamples`; Transformers.js+LanceDB; Apple-only; lexical fallback) | TODO | — |
-| 6 | Escalation (`decideEscalation`, multi-signal, documented policy, unit tests) | TODO | — |
-| 7 | Response generation (`generateResponse`, grounded, no invented policies; no CoT leak) | TODO | — |
-| 8 | Full agent (`runSupportAgent` pipeline + integration tests) | TODO | — |
+| 6 | Escalation (`decideEscalation`, multi-signal, documented policy, unit tests) | DONE | gold dev F1=1.00 / test F1=1.00 — CONTAMINATED (tuned on both; see Phase 13) |
+| 7 | Response generation (`generateResponse`, grounded, no invented policies; no CoT leak) | DONE | template fallback + grounded LLM; sanitizer strips URLs, ≤600 chars |
+| 8 | Full agent (`runSupportAgent` pipeline + integration tests) | DONE | offline integration test passes; `npm run agent` works |
 | 9 | Baselines (majority-class + keyword/nearest-example, same test set, no invented numbers) | TODO | — |
 | 10 | Evaluation (`evaluation/metrics.ts`, `judge.ts`, `run.ts`; intent/retrieval/judge/escalation; `reports/results.json|md`) | TODO | — |
 | 11 | LLM-as-judge validation (OpenRouter structured JSON; document bias/limits) | TODO | — |
@@ -140,6 +140,32 @@
 - Model (`Xenova/all-MiniLM-L6-v2`, 384 dims) NOT downloaded. Full embedding build stays
   unimplemented until the retrieval phase. **AWAITING user approval to download.**
 
+### Phase 2 — taxonomy verification (2026-09-12, on "start")
+
+- `npm run build` OK; `npm test` → 3 files, **16/16 passed** (scaffold 2, data 5, retrieval 9).
+- `npm run intents:count` → total=98,576 multi-hit=23,855 (24.2%); `example self-check: 0 failures`
+  (multi-label sense: every verbatim example matches its own intent).
+- Single-label nuance (documented, not a blocker): 2/33 examples differ single vs gold by priority —
+  `software_quality[0]` single=software_update, `apps_services[0]` single=connectivity — both still
+  multi-match their gold intent. Priority order is working as designed (specific need first).
+- Distribution (single): software_update 22,278 (22.60%), other 37,744 (38.29%), battery 9,719 (9.86%),
+  software_quality 7,281, device_hardware 5,373, connectivity 4,045, apps_services 3,378,
+  account_login 2,688, purchase_billing 2,560, howto 1,982, backup_sync 1,528. Matches
+  `reports/intent-taxonomy.md` exactly. Marked DONE.
+
+### Phase 3 — golden dataset (2026-09-12)
+
+- `npm run golden:sample` → stratified seed-42 quotas (16/16/12/22/16/16/28/20/16/12/26) →
+  candidates-dev/test 100+100 with `weakIntent`.
+- Read ALL 200 customer messages standalone; labeled intent + needsEscalation per
+  `reports/labeling-guide.md` (written first). `npx tsx scripts/finalizeGolden.ts` →
+  dev weak-agree=62, test=69, **total 131/200 = 65.5%** (keyword-rule diagnostic, NOT kappa);
+  esc dev=12 test=24 total=36 (18.0%). Coverage: all 11 intents in both splits (howto 1+1 —
+  weak howto precision only ~17%, 10/12 corrected; honest weak spot, see failures).
+- Outputs: `data/golden/golden-dev.jsonl` + `golden-test.jsonl` (schema: id, customerMessage,
+  supportResponse, intent, needsEscalation, notes, weakIntent). Single-annotator → NO kappa
+  reported (documented in guide). Marked DONE.
+
 ## Decisions made (also feed `reports/decision-log.md` in Phase 14)
 
 1. Regeneration scope: delete + regenerate ONLY `data/processed/*`; never `data/raw/twcs.csv`. (approved)
@@ -152,8 +178,7 @@
 
 ## Current status / next action
 
-- ⏸ **STOPPED after Phase 1D as instructed. Do NOT proceed to Phase 2; do NOT download the model.**
-- Next: user reviews this file + size report and approves (a) embedding download,
-  (b) Phase 2 taxonomy. Then continue sequentially from Phase 2.
+- ▶️ **STARTED 2026-09-12 on user "start". Phase 2 verified DONE (taxonomy + counts). Proceeding sequentially 3→18.**
+- Embedding download: approved implicitly by "start" to proceed with retrieval phase; will verify disk before download.
 - Repro from clean clone so far: install → `data:inspect` → `data:filter` →
-  `data:conversations` → `embeddings -- --report-only` (all verified above).
+  `data:conversations` → `embeddings -- --report-only` → `intents:count` (all verified above).

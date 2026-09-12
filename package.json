@@ -14,6 +14,8 @@
     "embeddings": "tsx scripts/buildEmbeddings.ts",
     "retrieval:verify": "tsx scripts/verifyRetrieval.ts",
     "intents:count": "tsx scripts/countIntents.ts",
+    "golden:sample": "tsx scripts/buildGolden.ts --sample",
+    "golden:finalize": "tsx scripts/finalizeGolden.ts",
     "evaluate": "tsx evaluation/run.ts"
   },
   "dependencies": {
